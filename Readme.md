@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Марина Горбунова](https://up.htmlacademy.ru/javascript/19/user/659065).
-* Наставник: `Неизвестно`.
+* Наставник: `Антон Попов`.
 
 ---
 
