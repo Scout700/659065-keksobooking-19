@@ -185,15 +185,14 @@ var generateOffers = function (count) {
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
 
-var mapPinTemplate = document.querySelector('#pin')
-.content
-.querySelector('.map__pin');
-
 /** generates a marker with the necessary characteristics (the coordinates of the label and the avatar and alternative text for the image).
 * @param {Object} pin the ad of array
 * @return {string} returns a new DOM element
 */
 var generatePin = function (pin) {
+  var mapPinTemplate = document.querySelector('#pin')
+  .content
+  .querySelector('.map__pin');
   var pinElement = mapPinTemplate.cloneNode(true);
   pinElement.style = 'left: ' + (pin.location.x - (PIN_WIDTH / 2)) + 'px; top: ' + (pin.location.y - PIN_HEIGHT) + 'px;';
   pinElement.querySelector('img').src = pin.author.avatar;
