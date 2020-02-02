@@ -104,6 +104,14 @@ var PIN_WIDTH = 40;
 * @constant {number} */
 var PIN_HEIGHT = 40;
 
+/** photo width
+* @constant {number} */
+var PHOTO_WIDTH = 45;
+
+/** photo height
+* @constant {number} */
+var PHOTO_HEIGHT = 40;
+
 /**
 * find a random number in the specified range
 * @param {number} min number
@@ -228,11 +236,28 @@ var generateCard = function (card) {
   cardElement.querySelector('.popup__type').textContent = card.offer.type;
   cardElement.querySelector('.popup__text--capacity').textContent = card.offer.rooms + ' комнат(-ы) для ' + card.offer.guests + ' гостей';
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + card.offer.checkin + ', выезд до ' + card.offer.checkout;
+
+  var featureFragment = document.createDocumentFragment();
+
+  card.offer.features.forEach(function (elem, k) {
+    var feature = document.createElement('li');
+    feature.className = 'popup__feature' + card.offer.features[k];
+    featureFragment.appendChild(feature);
+  });
   cardElement.querySelector('.popup__features').textContent = card.offer.features;
   cardElement.querySelector('.popup__description').textContent = card.offer.description;
-  cardElement.querySelector('.popup__photos').src = card.offer.photos;
-  cardElement.querySelector('.popup__avatar').src = card.author.avatar;
 
+  var photoFragment = document.createDocumentFragment();
+
+  card.offer.photos.forEach(function (elem, j) {
+    var photo = document.createElement('img');
+    photo.src = card.offer.photos[j];
+    photo.className = 'popup__photo';
+    photo.style = 'width:' + PHOTO_WIDTH + 'px; height: ' + PHOTO_HEIGHT + 'px';
+    photoFragment.appendChild(photo);
+  });
+  cardElement.querySelector('.popup__photos').appendChild(photoFragment);
+  cardElement.querySelector('.popup__avatar').src = card.author.avatar;
   map.insertBefore(cardElement, document.querySelector('.map__filters-container'));
 };
 
