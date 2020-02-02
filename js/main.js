@@ -244,7 +244,7 @@ var generateCard = function (card) {
     feature.className = 'popup__feature' + card.offer.features[k];
     featureFragment.appendChild(feature);
   });
-  cardElement.querySelector('.popup__features').textContent = card.offer.features;
+  cardElement.querySelector('.popup__features').appendChild(featureFragment);
   cardElement.querySelector('.popup__description').textContent = card.offer.description;
 
   var photoFragment = document.createDocumentFragment();
