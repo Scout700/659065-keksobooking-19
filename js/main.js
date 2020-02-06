@@ -10,7 +10,7 @@ var MIN_PRICE = 10000;
 
 /** maximum price
 * @constant {number} */
-var MAX_PRICE = 3000000;
+var MAX_PRICE = 1000000;
 
 /** minimum rooms
 * @constant {number} */
@@ -103,14 +103,6 @@ var PIN_WIDTH = 40;
 /** pin height
 * @constant {number} */
 var PIN_HEIGHT = 40;
-
-/** photo width
-* @constant {number} */
-var PHOTO_WIDTH = 45;
-
-/** photo height
-* @constant {number} */
-var PHOTO_HEIGHT = 40;
 
 /**
 * find a random number in the specified range
@@ -232,30 +224,33 @@ var generateCard = function (card) {
   var cardElement = cardTemplate.cloneNode(true);
   cardElement.querySelector('.popup__title').textContent = card.offer.title;
   cardElement.querySelector('.popup__text--address').textContent = card.offer.address;
-  cardElement.querySelector('.popup__text--price').textContent = card.offer.price + 'Р/ночь';
+  cardElement.querySelector('.popup__text--price').textContent = card.offer.price + '\u20bd/ночь';
   cardElement.querySelector('.popup__type').textContent = card.offer.type;
   cardElement.querySelector('.popup__text--capacity').textContent = card.offer.rooms + ' комнат(-ы) для ' + card.offer.guests + ' гостей';
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + card.offer.checkin + ', выезд до ' + card.offer.checkout;
 
   var featureFragment = document.createDocumentFragment();
-
+  var featuresList = cardElement.querySelector('.popup__features');
+  featuresList.textContent = '';
   card.offer.features.forEach(function (elem, k) {
     var feature = document.createElement('li');
-    feature.className = 'popup__feature' + card.offer.features[k];
+    feature.className = 'popup__feature popup__feature--' + card.offer.features[k];
     featureFragment.appendChild(feature);
   });
-  cardElement.querySelector('.popup__features').appendChild(featureFragment);
+  featuresList.appendChild(featureFragment);
+
   cardElement.querySelector('.popup__description').textContent = card.offer.description;
 
   var photoFragment = document.createDocumentFragment();
+  var popupPhotos = cardElement.querySelector('.popup__photos');
 
-  card.offer.photos.forEach(function (elem, j) {
-    var photo = document.createElement('img');
+  card.offer.photos.forEach(function (photo, j) {
+    var photosList = popupPhotos.querySelector('img');
+    photo = photosList.cloneNode(true);
     photo.src = card.offer.photos[j];
-    photo.className = 'popup__photo';
-    photo.style = 'width:' + PHOTO_WIDTH + 'px; height: ' + PHOTO_HEIGHT + 'px';
     photoFragment.appendChild(photo);
   });
+  popupPhotos.textContent = '';
   cardElement.querySelector('.popup__photos').appendChild(photoFragment);
   cardElement.querySelector('.popup__avatar').src = card.author.avatar;
   map.insertBefore(cardElement, document.querySelector('.map__filters-container'));
@@ -265,3 +260,24 @@ var generateCard = function (card) {
 var pinsArray = generateOffers(numberPins);
 addPinsOnMap(pinsArray);
 generateCard(pinsArray[0]);
+
+/*
+// Adding the disabled attribute
+var mapFilters = document.querySelector('.map__filters');
+var adForm = document.querySelector('.ad-form');
+var adFormInput = adForm.querySelectorAll('input');
+var adFormSelect = adForm.querySelectorAll('select');
+
+
+var addsAttributeDisabled = function (arr) {
+  arr.forEach(function (elem) {
+    elem.setAttribute('disabled', 'disabled');
+  });
+};
+
+mapFilters.setAttribute('disabled', 'disabled');
+adForm.setAttribute('disabled', 'disabled');
+addsAttributeDisabled(adFormInput);
+addsAttributeDisabled(adFormSelect);
+
+// var mapPinMain = map.querySelector('map__pin--main');*/
